@@ -20,9 +20,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.index),
+
     path('admin/', admin.site.urls),
     path('info', views.info),
-    # path('get/all', views.info),
+
+    path('get/all', views.get_all_cve),
     # path('get/new'),
     # path('get/pdf/new') 
 ]

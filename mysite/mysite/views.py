@@ -1,8 +1,9 @@
-# import nvdlib
-# import datetime
-# import requests
+import nvdlib
+import datetime
+import requests
 # import pdfkit
 
+from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, JsonResponse
 from json import loads
@@ -10,26 +11,43 @@ from django.shortcuts import render
 
 from django.template.loader import render_to_string
 
-info_arr = [
-  'Добавь',
-  'Тектс2',
-  'Лы',
-  'ся4',
-]
+API_KEY = "07f6e22a-77bc-408d-94a4-f90f4ac12b08"
 
-API_KEY = ""
+@require_http_methods(["GET"])
+def index(request):
+  HTML_STRING = render_to_string("index.html")
+  return HttpResponse(HTML_STRING)
+
 
 @require_http_methods(["GET"])
 def info(request):
   HTML_STRING = render_to_string("info.html", {
-    'info_arr': info_arr
+    'info_arr': [
+      'Добавь',
+      'Тектс2',
+      'Лы',
+      'ся4',
+    ]
   })
   return HttpResponse(HTML_STRING)
 
-# @require_http_methods(["GET"])
-# def get_all_cve(request):
-#     params = {"apiKey": API_KEY}
-#     resp = request.get("", params = params)
-#     cve_page = resp.json()['result']
+@require_http_methods(["GET"])
+def get_all_cve(request):
+    params = {"apiKey": API_KEY}
+    resp = requests.get('https://services.nvd.nist.gov/rest/json/cves/1.0/', params = params)
+    cve_page = resp.json()['result']
 
-#     return JsonResponse(cve_page, safe = False)
+    return JsonResponse(cve_page, safe = False)
+
+@require_http_methods(["GET"])
+def get_new_cve(request):
+  end = datetime.datetime.now()
+  start = end - datetime.timedelta(days = 7)
+  resp = nvdlib.searchCVE(pubStartDate = start, pubEndDate = end, key = API_KEY)
+  res_list = [str(x) for x in resp]
+  resp_list = []
+
+  for x in resp:
+    resp_list.append(str(x))
+
+  return JsonResponse({"result" : res_list}, safe = False) 
