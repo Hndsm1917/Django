@@ -3,7 +3,6 @@ import datetime
 import requests
 # import pdfkit
 
-from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, JsonResponse
 from json import loads
@@ -42,12 +41,9 @@ def get_all_cve(request):
 @require_http_methods(["GET"])
 def get_new_cve(request):
   end = datetime.datetime.now()
+
   start = end - datetime.timedelta(days = 7)
   resp = nvdlib.searchCVE(pubStartDate = start, pubEndDate = end, key = API_KEY)
   res_list = [str(x) for x in resp]
-  resp_list = []
-
-  for x in resp:
-    resp_list.append(str(x))
 
   return JsonResponse({"result" : res_list}, safe = False) 

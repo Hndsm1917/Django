@@ -26,6 +26,6 @@ urlpatterns = [
     path('info', views.info),
 
     path('get/all', views.get_all_cve),
-    # path('get/new'),
+    path('get/new', views.get_new_cve),
     # path('get/pdf/new') 
 ]
