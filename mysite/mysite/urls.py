@@ -28,7 +28,7 @@ urlpatterns = [
     path('get/all', views.get_all_cve),
     path('get/new', views.get_new_cve),
     path('get/critical', views.get_critical_cve),
-    path('get/query', views.get_new_cve),
+    path('get/query/', views.get_by_query_cve),
 
 
     path('get/pdf/all', views.get_all_pdf_cve),

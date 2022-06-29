@@ -166,5 +166,13 @@ def get_critical_cve(request):
 
 @require_http_methods(["GET"])
 def get_by_query_cve(request):
+  id = request.GET.get('keyword')   
 
-  return  
+  resp = nvdlib.searchCVE(keyword = str(id), key = API_KEY)
+  res_list = [str(x) for x in resp]
+
+
+
+  return JsonResponse({"result" : res_list}, safe = False) 
+  
+  # return 
