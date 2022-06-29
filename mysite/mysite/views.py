@@ -47,3 +47,8 @@ def get_new_cve(request):
   res_list = [str(x) for x in resp]
 
   return JsonResponse({"result" : res_list}, safe = False) 
+
+@require_http_methods(["GET"])
+def get_critical(request):
+
+  return
