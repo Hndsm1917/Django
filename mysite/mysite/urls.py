@@ -29,5 +29,7 @@ urlpatterns = [
     path('get/new', views.get_new_cve),
     path('get/critical', views.get_critical_cve),
     path('get/new', views.get_new_cve),
+
+    path('get/pdf/new', views.get_new_pdf)
     # path('get/pdf/new') 
 ]
